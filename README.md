@@ -11,20 +11,7 @@ Aplikasi tracking keluarga dengan integrasi smartwatch yang memungkinkan orang t
 - **Notifikasi**: Notifikasi lokasi dan aktivitas
 - **Integrasi IoT**: Koneksi dengan perangkat IoT eksternal
 
-## 🛠️ Prerequisites
-
-Sebelum memulai, pastikan Anda sudah menginstal:
-
-- **Flutter SDK** (3.0 atau lebih tinggi)
-  ```bash
-  flutter --version
-  ```
-- **Android Studio** atau **VS Code** dengan Flutter extension
-- **Java JDK** (untuk build Android)
-- **Git**
-- **Akun Firebase** (untuk backend)
-
-## 📱 Struktur Proyek
+## � Struktur Proyek
 
 ```
 Projek_PAM/
@@ -32,179 +19,363 @@ Projek_PAM/
 └── aplikasi2_watch/    # Aplikasi smartwatch
 ```
 
-## 🚀 Cara Setup dan Menjalankan
+---
 
-### 1. Clone Repository
+# 🚀 PANDUAN LENGKAP MENJALANKAN APLIKASI
+
+Ikuti langkah-langkah berikut secara berurutan untuk menjalankan aplikasi ini di laptop Anda.
+
+## LANGKAH 1: Persiapan Tools (Install Sekali Saja)
+
+### 1.1 Install Flutter SDK
+
+1. **Download Flutter:**
+   - Buka https://docs.flutter.dev/get-started/install/windows
+   - Download Flutter SDK untuk Windows (file .zip)
+   - Extract file zip ke folder `C:\src\flutter` (atau lokasi pilihan Anda)
+
+2. **Tambahkan Flutter ke PATH:**
+   - Buka "Edit System Environment Variables" di Windows
+   - Klik "Environment Variables"
+   - Di bagian "User variables", edit variable "Path"
+   - Tambahkan path: `C:\src\flutter\bin` (sesuaikan dengan lokasi Flutter Anda)
+   - Klik OK
+
+3. **Verifikasi Instalasi:**
+   - Buka Command Prompt atau PowerShell
+   - Ketik: `flutter --version`
+   - Jika berhasil, akan muncul versi Flutter
+
+### 1.2 Install Android Studio
+
+1. **Download Android Studio:**
+   - Buka https://developer.android.com/studio
+   - Download dan install Android Studio
+
+2. **Install Android SDK:**
+   - Buka Android Studio
+   - Pilih "More Actions" → "SDK Manager"
+   - Pastikan terinstall:
+     - Android SDK Platform (Android 13.0 atau lebih tinggi)
+     - Android SDK Build-Tools
+     - Android SDK Command-line Tools
+
+3. **Buat Emulator (Virtual Device):**
+   - Di Android Studio, pilih "More Actions" → "Virtual Device Manager"
+   - Klik "Create Device"
+   - Pilih device (contoh: Pixel 5)
+   - Pilih system image (contoh: Android 13.0 - API Level 33)
+   - Klik "Finish"
+
+### 1.3 Install VS Code (Opsional, tapi Direkomendasikan)
+
+1. Download dan install VS Code dari https://code.visualstudio.com/
+2. Install Extension Flutter di VS Code:
+   - Buka VS Code
+   - Klik icon Extensions (Ctrl+Shift+X)
+   - Cari "Flutter"
+   - Install extension "Flutter" (by Dart Code)
+
+### 1.4 Setup Flutter
+
+Jalankan perintah berikut di Command Prompt/PowerShell:
 
 ```bash
-git clone https://github.com/Zuhair111/projek-PAM-UAS-Semester5.git
-cd projek-PAM-UAS-Semester5
+flutter doctor
 ```
 
-### 2. Setup Firebase
+Perintah ini akan mengecek semua yang dibutuhkan. Ikuti instruksi untuk memperbaiki masalah yang muncul (jika ada).
 
-#### a. Buat Proyek Firebase
-1. Buka [Firebase Console](https://console.firebase.google.com/)
-2. Klik "Add project" atau "Tambah proyek"
-3. Ikuti wizard setup proyek
+---
 
-#### b. Enable Services Firebase
-Di Firebase Console, aktifkan:
-- **Authentication** → Email/Password
-- **Firestore Database** → Mode Production
-- **Realtime Database**
+## LANGKAH 2: Persiapan File Aplikasi
 
-#### c. Download Configuration Files
+### 2.1 Ekstrak Folder
 
-**Untuk Android:**
-1. Tambahkan aplikasi Android di Firebase Console
-2. Package name: `com.example.aplikasi2` (untuk aplikasi utama)
-3. Download `google-services.json`
-4. Letakkan di `aplikasi2/android/app/google-services.json`
+1. Salin folder `Projek_PAM` yang Anda terima
+2. Letakkan di lokasi yang mudah diakses, contoh: `C:\Users\YourName\Projects\Projek_PAM`
+3. Pastikan struktur folder seperti ini:
+   ```
+   Projek_PAM/
+   ├── aplikasi2/
+   └── aplikasi2_watch/
+   ```
 
-**Untuk Watch:**
-1. Tambahkan aplikasi Android lagi
-2. Package name: `com.example.aplikasi2_watch`
-3. Download `google-services.json`
-4. Letakkan di `aplikasi2_watch/android/app/google-services.json`
+### 2.2 Buka Folder di VS Code atau Terminal
 
-#### d. Setup Firestore Rules
-Di Firebase Console → Firestore Database → Rules, paste rules berikut:
+**Jika menggunakan VS Code:**
+- Buka VS Code
+- File → Open Folder
+- Pilih folder `Projek_PAM`
 
-```javascript
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /users/{userId} {
-      allow read, write: if request.auth != null;
-    }
-    match /families/{familyId} {
-      allow read, write: if request.auth != null;
-    }
-    match /locations/{locationId} {
-      allow read, write: if request.auth != null;
-    }
-  }
-}
+**Jika menggunakan Terminal/PowerShell:**
+```bash
+cd C:\Users\YourName\Projects\Projek_PAM
 ```
 
-### 3. Setup Google Maps API
+---
 
-1. Buka [Google Cloud Console](https://console.cloud.google.com/)
-2. Buat atau pilih project yang sama dengan Firebase
-3. Enable **Maps SDK for Android**
-4. Buat API Key di Credentials
-5. Edit file `aplikasi2/android/app/src/main/AndroidManifest.xml`:
+## LANGKAH 3: Setup Firebase (WAJIB)
 
-```xml
-<meta-data
-    android:name="com.google.android.geo.API_KEY"
-    android:value="YOUR_API_KEY_HERE"/>
-```
+Aplikasi ini menggunakan Firebase sebagai backend. Anda HARUS setup Firebase terlebih dahulu.
 
-### 4. Install Dependencies
+### 3.1 Buat Akun Firebase
 
-#### Untuk Aplikasi Utama:
+1. Buka https://console.firebase.google.com/
+2. Login dengan akun Google Anda
+3. Klik "Add project" atau "Tambah proyek"
+4. Nama proyek: `family-tracking-app` (atau terserah Anda)
+5. Ikuti wizard hingga selesai
+
+### 3.2 Enable Authentication
+
+1. Di Firebase Console, pilih proyek Anda
+2. Klik "Authentication" di menu kiri
+3. Klik tab "Sign-in method"
+4. Enable "Email/Password"
+5. Klik "Save"
+
+### 3.3 Enable Firestore Database
+
+1. Di Firebase Console, klik "Firestore Database"
+2. Klik "Create database"
+3. Pilih mode: **"Start in production mode"**
+4. Pilih lokasi: **asia-southeast2 (Jakarta)** atau yang terdekat
+5. Klik "Enable"
+
+6. **Setup Firestore Rules:**
+   - Klik tab "Rules"
+   - Ganti semua isi dengan kode berikut:
+   ```javascript
+   rules_version = '2';
+   service cloud.firestore {
+     match /databases/{database}/documents {
+       match /users/{userId} {
+         allow read, write: if request.auth != null;
+       }
+       match /families/{familyId} {
+         allow read, write: if request.auth != null;
+       }
+       match /locations/{locationId} {
+         allow read, write: if request.auth != null;
+       }
+       match /smartwatches/{watchId} {
+         allow read, write: if request.auth != null;
+       }
+     }
+   }
+   ```
+   - Klik "Publish"
+
+### 3.4 Enable Realtime Database
+
+1. Di Firebase Console, klik "Realtime Database"
+2. Klik "Create Database"
+3. Pilih lokasi yang sama dengan Firestore
+4. Pilih mode: **"Start in locked mode"**
+5. Klik "Enable"
+
+6. **Setup Realtime Database Rules:**
+   - Klik tab "Rules"
+   - Ganti dengan:
+   ```json
+   {
+     "rules": {
+       ".read": "auth != null",
+       ".write": "auth != null"
+     }
+   }
+   ```
+   - Klik "Publish"
+
+### 3.5 Download File Konfigurasi Firebase
+
+#### Untuk Aplikasi Utama (aplikasi2):
+
+1. Di Firebase Console, klik icon gear (⚙️) → "Project settings"
+2. Scroll ke bawah ke bagian "Your apps"
+3. Klik icon Android (robot hijau)
+4. **Register app:**
+   - Android package name: `com.example.aplikasi2`
+   - App nickname: `Aplikasi2` (opsional)
+   - Klik "Register app"
+5. **Download google-services.json:**
+   - Klik tombol "Download google-services.json"
+   - Simpan file ini
+6. **Letakkan file di lokasi yang benar:**
+   - Copy file `google-services.json`
+   - Paste ke folder: `Projek_PAM\aplikasi2\android\app\`
+   - Path lengkap: `C:\Users\YourName\Projects\Projek_PAM\aplikasi2\android\app\google-services.json`
+
+#### Untuk Aplikasi Watch (aplikasi2_watch):
+
+1. Masih di halaman "Project settings" → "Your apps"
+2. Klik "Add app" → Pilih icon Android lagi
+3. **Register app:**
+   - Android package name: `com.example.aplikasi2_watch`
+   - App nickname: `Aplikasi2 Watch` (opsional)
+   - Klik "Register app"
+4. **Download google-services.json:**
+   - Download file yang kedua ini
+5. **Letakkan file di lokasi yang benar:**
+   - Copy file `google-services.json`
+   - Paste ke folder: `Projek_PAM\aplikasi2_watch\android\app\`
+   - Path lengkap: `C:\Users\YourName\Projects\Projek_PAM\aplikasi2_watch\android\app\google-services.json`
+
+**PENTING:** Pastikan kedua file `google-services.json` sudah berada di lokasi yang benar!
+
+---
+
+## LANGKAH 4: Setup Google Maps API (WAJIB)
+
+### 4.1 Buat API Key
+
+1. Buka https://console.cloud.google.com/
+2. Pilih project yang sama dengan Firebase (atau akan otomatis dipilih)
+3. Klik menu ☰ → "APIs & Services" → "Library"
+4. Cari "Maps SDK for Android"
+5. Klik "Maps SDK for Android" → Klik "Enable"
+6. Klik menu ☰ → "APIs & Services" → "Credentials"
+7. Klik "Create Credentials" → "API Key"
+8. Copy API Key yang muncul (contoh: `AIzaSyAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQ`)
+
+### 4.2 Masukkan API Key ke Aplikasi
+
+1. Buka file: `Projek_PAM\aplikasi2\android\app\src\main\AndroidManifest.xml`
+2. Cari baris yang berisi `com.google.android.geo.API_KEY`
+3. Ganti `YOUR_API_KEY_HERE` dengan API Key Anda:
+   ```xml
+   <meta-data
+       android:name="com.google.android.geo.API_KEY"
+       android:value="AIzaSyAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQ"/>
+   ```
+4. Simpan file (Ctrl+S)
+
+---
+
+## LANGKAH 5: Install Dependencies
+
+Sekarang kita install semua package yang dibutuhkan aplikasi.
+
+### 5.1 Install Dependencies Aplikasi Utama
+
+Buka Terminal/PowerShell di folder aplikasi utama:
+
 ```bash
 cd aplikasi2
 flutter pub get
 ```
 
-#### Untuk Aplikasi Watch:
+Tunggu hingga proses selesai (biasanya 1-3 menit tergantung koneksi internet).
+
+### 5.2 Install Dependencies Aplikasi Watch
+
+Buka Terminal/PowerShell di folder aplikasi watch:
+
 ```bash
-cd aplikasi2_watch
+cd ..\aplikasi2_watch
 flutter pub get
 ```
 
-### 5. Jalankan Aplikasi
+Tunggu hingga selesai.
 
-#### Aplikasi Utama (Smartphone):
+---
 
-1. Hubungkan smartphone Android atau jalankan emulator
-2. Pastikan device terdeteksi:
-   ```bash
-   flutter devices
-   ```
-3. Jalankan aplikasi:
-   ```bash
-   cd aplikasi2
-   flutter run
-   ```
+## LANGKAH 6: Jalankan Aplikasi
 
-#### Aplikasi Watch (Smartwatch):
+### 6.1 Jalankan Emulator Android
 
-1. Hubungkan smartwatch Android atau gunakan emulator Wear OS
-2. Jalankan aplikasi:
-   ```bash
-   cd aplikasi2_watch
-   flutter run
-   ```
+**Cara 1: Via Android Studio**
+1. Buka Android Studio
+2. Klik "More Actions" → "Virtual Device Manager"
+3. Klik tombol ▶️ (Play) pada device yang sudah dibuat
+4. Tunggu emulator menyala (biasanya 1-2 menit)
 
-## 📖 Cara Menggunakan Aplikasi
+**Cara 2: Via Command Line**
+```bash
+flutter emulators
+flutter emulators --launch <nama_emulator>
+```
 
-### Pertama Kali Menggunakan
+### 6.2 Cek Koneksi Device
 
-1. **Registrasi Akun**
-   - Buka aplikasi → Klik "Daftar"
-   - Isi email dan password
-   - Verifikasi email jika diperlukan
+Pastikan emulator terdeteksi:
 
-2. **Pilih Role**
-   - **Parent**: Untuk orang tua yang ingin memantau
-   - **Child**: Untuk anak yang akan dipantau
+```bash
+flutter devices
+```
 
-3. **Setup Profil**
-   - Masukkan nama depan
-   - Lengkapi informasi profil
+Seharusnya muncul device Android dalam list.
 
-### Untuk Orang Tua (Parent)
+### 6.3 Jalankan Aplikasi Utama
 
-1. **Tambah Anggota Keluarga**
-   - Buka menu "Family"
-   - Klik tombol "+" atau "Tambah Anggota"
-   - Pilih metode:
-     - Undang via kode
-     - Scan QR code anak
+Pastikan Anda di folder `aplikasi2`:
 
-2. **Pantau Lokasi**
-   - Buka halaman "Location" atau "Map"
-   - Lihat lokasi real-time semua anggota keluarga di peta
-   - Klik marker untuk detail
+```bash
+cd aplikasi2
+flutter run
+```
 
-3. **Pairing Smartwatch**
-   - Buka menu "Smartwatch" atau "Jam Tangan"
-   - Klik "Pair New Device"
-   - Scan QR code dari smartwatch anak
+**Proses build pertama kali akan lama (5-15 menit).** Harap bersabar!
 
-### Untuk Anak (Child)
+Setelah berhasil, aplikasi akan otomatis terbuka di emulator.
 
-1. **Terima Undangan**
-   - Masukkan kode undangan dari orang tua
-   - Atau tunjukkan QR code untuk di-scan
+### 6.4 Jalankan Aplikasi Watch (Opsional)
 
-2. **Berikan Izin Lokasi**
-   - Aplikasi akan meminta izin lokasi
-   - Izinkan "Always" atau "Selalu" untuk tracking real-time
+Jika ingin test aplikasi watch, Anda perlu emulator Wear OS atau smartwatch fisik.
 
-3. **Setup Smartwatch (Opsional)**
-   - Install aplikasi watch di smartwatch
-   - Login dengan akun yang sama
-   - Buka halaman QR Pairing
-   - Tunjukkan QR code ke orang tua untuk di-scan
+**Untuk emulator Wear OS:**
+1. Di Android Studio, buat Virtual Device baru
+2. Pilih kategori "Wear OS" 
+3. Pilih device seperti "Wear OS Small Round"
+4. Jalankan emulator
 
-## ⚙️ Konfigurasi IoT (Opsional)
+**Jalankan aplikasi:**
+```bash
+cd aplikasi2_watch
+flutter run
+```
 
-Jika ingin mengintegrasikan dengan perangkat IoT:
+Pilih device Wear OS saat diminta.
 
-1. Edit `aplikasi2/lib/utils/iot_config.dart`
-2. Sesuaikan IP dan port perangkat IoT Anda
-3. Buka halaman "IoT Device" di aplikasi
-4. Koneksi ke perangkat
+---
 
-## 🔧 Troubleshooting
+## LANGKAH 7: Testing Aplikasi
 
-### Build Error
+### 7.1 Registrasi Akun Pertama
 
+1. Di aplikasi, klik "Daftar" atau "Register"
+2. Masukkan email: `test@example.com`
+3. Masukkan password: `test123456`
+4. Klik "Register"
+
+### 7.2 Setup Profil
+
+1. Pilih role: **Parent** (Orang Tua)
+2. Masukkan nama: `Test Parent`
+3. Lengkapi profil
+
+### 7.3 Test Fitur
+
+- **Lokasi**: Izinkan akses lokasi → Lihat peta
+- **Family**: Coba tambah anggota keluarga
+- **Profile**: Edit profil Anda
+
+---
+
+## ❗ Troubleshooting - Masalah yang Sering Terjadi
+
+### Problem 1: "flutter command not found"
+
+**Solusi:**
+- Flutter belum masuk PATH
+- Ulangi Langkah 1.1 untuk menambahkan Flutter ke PATH
+- Restart terminal/PowerShell
+- Test lagi: `flutter --version`
+
+### Problem 2: Build error "Gradle sync failed"
+
+**Solusi:**
 ```bash
 cd aplikasi2
 flutter clean
@@ -212,46 +383,82 @@ flutter pub get
 flutter run
 ```
 
-### Google Maps Tidak Muncul
-- Pastikan API key sudah benar
-- Pastikan Maps SDK for Android sudah enabled
-- Pastikan API key tidak ada pembatasan yang memblokir aplikasi
+### Problem 3: "google-services.json not found"
 
-### Firebase Connection Error
-- Cek `google-services.json` sudah di lokasi yang benar
-- Pastikan package name sama dengan di Firebase Console
-- Rebuild aplikasi setelah menambahkan config
+**Solusi:**
+- File `google-services.json` belum diletakkan dengan benar
+- Pastikan file ada di:
+  - `aplikasi2\android\app\google-services.json`
+  - `aplikasi2_watch\android\app\google-services.json`
 
-### Lokasi Tidak Update
-- Pastikan izin lokasi sudah diberikan
-- Cek GPS device sudah aktif
-- Pastikan ada koneksi internet
+### Problem 4: Google Maps tidak muncul (peta kosong)
 
-### Smartwatch Tidak Bisa Pairing
-- Pastikan kedua device (phone & watch) terkoneksi internet
-- Pastikan sudah login dengan akun yang benar
-- Coba generate QR code baru
+**Solusi:**
+- API Key belum dimasukkan atau salah
+- Cek file `AndroidManifest.xml`
+- Pastikan "Maps SDK for Android" sudah di-enable di Google Cloud Console
+- Rebuild aplikasi:
+  ```bash
+  flutter clean
+  flutter run
+  ```
 
-## 📞 Testing
+### Problem 5: Lokasi tidak bisa diakses
 
-### Test di Emulator
+**Solusi:**
+- Di emulator, buka Settings → Location → Enable
+- Set lokasi manual di emulator (menu "..." → Location)
+- Izinkan permission lokasi saat diminta aplikasi
 
-```bash
-# Jalankan emulator
-flutter emulators --launch <emulator_id>
+### Problem 6: Firebase Authentication error
 
-# Run app
-flutter run
-```
+**Solusi:**
+- Pastikan Email/Password sudah di-enable di Firebase Console
+- Cek file `google-services.json` sudah benar
+- Pastikan package name sama persis: `com.example.aplikasi2`
 
-### Test dengan Device Fisik
+### Problem 7: Build sangat lama (lebih dari 20 menit)
 
-1. Enable USB Debugging di Android device
-2. Hubungkan via USB
-3. `flutter devices` untuk cek koneksi
-4. `flutter run` untuk install dan jalankan
+**Solusi:**
+- Build pertama memang lama, ini normal
+- Jika stuck, tekan Ctrl+C lalu coba lagi:
+  ```bash
+  flutter clean
+  flutter pub get
+  flutter run
+  ```
 
-## 🏗️ Build APK
+---
+
+## 📋 Checklist Setup
+
+Gunakan checklist ini untuk memastikan semua sudah benar:
+
+- [ ] Flutter SDK terinstall dan `flutter --version` berjalan
+- [ ] Android Studio terinstall
+- [ ] Android SDK terinstall
+- [ ] Emulator Android sudah dibuat
+- [ ] Folder aplikasi sudah diekstrak
+- [ ] Akun Firebase sudah dibuat
+- [ ] Authentication di-enable di Firebase
+- [ ] Firestore Database dibuat dan rules sudah di-update
+- [ ] Realtime Database dibuat dan rules sudah di-update
+- [ ] File `google-services.json` untuk aplikasi2 sudah ada di `aplikasi2\android\app\`
+- [ ] File `google-services.json` untuk watch sudah ada di `aplikasi2_watch\android\app\`
+- [ ] Google Maps API Key sudah dibuat
+- [ ] Maps SDK for Android sudah di-enable
+- [ ] API Key sudah dimasukkan ke `AndroidManifest.xml`
+- [ ] `flutter pub get` berhasil di folder aplikasi2
+- [ ] `flutter pub get` berhasil di folder aplikasi2_watch
+- [ ] Emulator sudah running
+- [ ] `flutter devices` menampilkan device
+- [ ] Aplikasi berhasil di-build dan running
+
+---
+
+## 🏗️ Build APK (Opsional)
+
+Jika ingin membuat file APK untuk diinstall di device lain:
 
 ### Debug APK
 ```bash
@@ -265,7 +472,28 @@ cd aplikasi2
 flutter build apk --release
 ```
 
-APK akan tersimpan di: `aplikasi2/build/app/outputs/flutter-apk/`
+APK akan tersimpan di: `aplikasi2\build\app\outputs\flutter-apk\`
+
+---
+
+## 📞 Informasi Tambahan
+
+### Link Repository
+https://github.com/Zuhair111/projek-PAM-UAS-Semester5
+
+### Catatan Penting
+
+⚠️ **JANGAN BAGIKAN:**
+- File `google-services.json` (sudah ada di .gitignore)
+- Google Maps API Key ke publik
+- Credentials Firebase
+
+✅ **AMAN DIBAGIKAN:**
+- Semua source code (.dart files)
+- Assets (images, icons)
+- File konfigurasi (pubspec.yaml, AndroidManifest.xml dengan placeholder API key)
+
+---
 
 ## 👥 Kontributor
 
@@ -277,4 +505,4 @@ Educational Project - Untuk keperluan akademik
 
 ---
 
-**Note**: Pastikan untuk tidak men-commit file `google-services.json` ke repository publik karena berisi sensitive information. File tersebut sudah masuk dalam `.gitignore`.
+**Selamat mencoba! Jika ada pertanyaan atau masalah, periksa bagian Troubleshooting terlebih dahulu.**
