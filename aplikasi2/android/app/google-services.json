@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "497173859432",
+    "project_id": "aplikasi2-9ab49",
+    "storage_bucket": "aplikasi2-9ab49.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497173859432:android:92e93fddc64f2713217fdd",
+        "android_client_info": {
+          "package_name": "com.example.aplikasi2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3S75Pd_vSltPj-9ViAqXTgdjplJS9iE4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

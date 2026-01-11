@@ -1,0 +1,61 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Users Collection
+    match /users/{userId} {
+      // Allow users to read and write their own data
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Family Members Collection
+    match /family_members/{memberId} {
+      allow read, write: if request.auth != null && 
+                            request.auth.uid == resource.data.userId;
+    }
+    
+    // Location Updates Collection
+    match /location_updates/{locationId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && 
+                     request.auth.uid == request.resource.data.userId;
+    }
+    
+    // Watch Pairing Collection - SPECIAL RULES
+    // Smartwatch belum login, jadi tidak bisa require auth
+    match /watch_pairing/{pairingCode} {
+      // Allow anyone to CREATE (smartwatch belum login)
+      // Validasi: code harus 6 digit, status harus 'pending'
+      allow create: if pairingCode.matches('^[0-9]{6}$') &&
+                       request.resource.data.status == 'pending' &&
+                       request.resource.data.keys().hasOnly(['status', 'createdAt']);
+      
+      // Allow anyone to READ (untuk listening)
+      // Sederhana: izinkan baca untuk semua pairing code yang valid (6 digit)
+      // Data akan dihapus otomatis setelah pairing selesai
+      allow read: if pairingCode.matches('^[0-9]{6}$');
+      
+      // Allow authenticated users to UPDATE (smartphone mengirim credentials)
+      // Validasi: status harus pending, update ke completed
+      allow update: if request.auth != null &&
+                       resource.data.status == 'pending' &&
+                       request.resource.data.status == 'completed' &&
+                       request.resource.data.email is string &&
+                       request.resource.data.password is string;
+      
+      // Allow anyone to DELETE (cleanup setelah login)
+      allow delete: if true;
+    }
+    
+    // Find Phone Collection (untuk smartwatch find phone feature)
+    match /find_phone/{requestId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Default: deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
