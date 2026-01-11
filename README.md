@@ -1,17 +1,22 @@
-# Family Tracking App - Projek PAM UAS Semester 5
+# Family Tracking App
+**Projek PAM - UAS Semester 5**
 
 Aplikasi tracking keluarga dengan integrasi smartwatch yang memungkinkan orang tua untuk memantau lokasi anak-anak mereka secara real-time.
 
+---
+
 ## 📋 Fitur Utama
 
-- **Tracking Lokasi Real-time**: Pantau lokasi anggota keluarga di peta
-- **Integrasi Smartwatch**: Dukungan untuk smartwatch Android
-- **Pairing QR Code**: Mudah menghubungkan smartwatch dengan aplikasi utama
-- **Manajemen Keluarga**: Tambah/kelola anggota keluarga
-- **Notifikasi**: Notifikasi lokasi dan aktivitas
-- **Integrasi IoT**: Koneksi dengan perangkat IoT eksternal
+- 📍 **Tracking Lokasi Real-time** - Pantau lokasi anggota keluarga di peta
+- ⌚ **Integrasi Smartwatch** - Dukungan untuk smartwatch Android
+- 📱 **Pairing QR Code** - Mudah menghubungkan smartwatch dengan aplikasi utama
+- 👨‍👩‍👧‍👦 **Manajemen Keluarga** - Tambah/kelola anggota keluarga
+- 🔔 **Notifikasi** - Notifikasi lokasi dan aktivitas
+- 🌐 **Integrasi IoT** - Koneksi dengan perangkat IoT eksternal
 
-## � Struktur Proyek
+---
+
+## 📁 Struktur Proyek
 
 ```
 Projek_PAM/
@@ -21,169 +26,133 @@ Projek_PAM/
 
 ---
 
-# 🚀 PANDUAN LENGKAP MENJALANKAN APLIKASI
+## 💡 Informasi Penting
 
-Ikuti langkah-langkah berikut secara berurutan untuk menjalankan aplikasi ini di laptop Anda.
+> **✅ Aplikasi ini sudah dikonfigurasi lengkap!**
+> 
+> Firebase dan Google Maps API sudah disetup. Anda **TIDAK** perlu:
+> - ❌ Membuat akun Firebase baru
+> - ❌ Setup Google Maps API Key baru
+> - ❌ Konfigurasi database dan authentication
+> 
+> Yang perlu Anda lakukan:
+> - ✅ Install Flutter SDK dan Android Studio
+> - ✅ Install dependencies (`flutter pub get`)
+> - ✅ Jalankan aplikasi (`flutter run`)
 
-> **CATATAN PENTING**: Aplikasi ini sudah dikonfigurasi lengkap dengan Firebase dan Google Maps API. 
-> Anda TIDAK perlu membuat akun Firebase atau API Key baru. 
-> Cukup install tools yang diperlukan dan jalankan aplikasi!
+---
 
-## LANGKAH 1: Persiapan Tools (Install Sekali Saja)
+# 🚀 Panduan Instalasi
+
+## Langkah 1: Persiapan Tools
 
 ### 1.1 Install Flutter SDK
 
-1. **Download Flutter:**
-   - Buka https://docs.flutter.dev/get-started/install/windows
-   - Download Flutter SDK untuk Windows (file .zip)
-   - Extract file zip ke folder `C:\src\flutter` (atau lokasi pilihan Anda)
-
-2. **Tambahkan Flutter ke PATH:**
-   - Buka "Edit System Environment Variables" di Windows
+1. Download Flutter dari [Flutter Official Website](https://docs.flutter.dev/get-started/install/windows)
+2. Extract file zip ke folder `C:\src\flutter`
+3. Tambahkan Flutter ke PATH:
+   - Buka "Edit System Environment Variables"
    - Klik "Environment Variables"
-   - Di bagian "User variables", edit variable "Path"
-   - Tambahkan path: `C:\src\flutter\bin` (sesuaikan dengan lokasi Flutter Anda)
-   - Klik OK
-
-3. **Verifikasi Instalasi:**
-   - Buka Command Prompt atau PowerShell
-   - Ketik: `flutter --version`
-   - Jika berhasil, akan muncul versi Flutter
+   - Edit "Path" → Tambahkan `C:\src\flutter\bin`
+4. Verifikasi instalasi:
+   ```bash
+   flutter --version
+   ```
 
 ### 1.2 Install Android Studio
 
-1. **Download Android Studio:**
-   - Buka https://developer.android.com/studio
-   - Download dan install Android Studio
+1. Download [Android Studio](https://developer.android.com/studio)
+2. Install Android SDK melalui SDK Manager:
+   - Android SDK Platform (API Level 33 atau lebih tinggi)
+   - Android SDK Build-Tools
+   - Android SDK Command-line Tools
+3. Buat Emulator Android:
+   - "More Actions" → "Virtual Device Manager"
+   - "Create Device" → Pilih Pixel 5
+   - Download system image (Android 13.0)
+   - Finish
 
-2. **Install Android SDK:**
-   - Buka Android Studio
-   - Pilih "More Actions" → "SDK Manager"
-   - Pastikan terinstall:
-     - Android SDK Platform (Android 13.0 atau lebih tinggi)
-     - Android SDK Build-Tools
-     - Android SDK Command-line Tools
+### 1.3 Install VS Code (Opsional)
 
-3. **Buat Emulator (Virtual Device):**
-   - Di Android Studio, pilih "More Actions" → "Virtual Device Manager"
-   - Klik "Create Device"
-   - Pilih device (contoh: Pixel 5)
-   - Pilih system image (contoh: Android 13.0 - API Level 33)
-   - Klik "Finish"
+1. Download [VS Code](https://code.visualstudio.com/)
+2. Install extension "Flutter" (by Dart Code)
 
-### 1.3 Install VS Code (Opsional, tapi Direkomendasikan)
+### 1.4 Verifikasi Setup
 
-1. Download dan install VS Code dari https://code.visualstudio.com/
-2. Install Extension Flutter di VS Code:
-   - Buka VS Code
-   - Klik icon Extensions (Ctrl+Shift+X)
-   - Cari "Flutter"
-   - Install extension "Flutter" (by Dart Code)
-
-### 1.4 Setup Flutter
-
-Jalankan perintah berikut di Command Prompt/PowerShell:
+Jalankan perintah berikut untuk mengecek instalasi:
 
 ```bash
 flutter doctor
 ```
 
-Perintah ini akan mengecek semua yang dibutuhkan. Ikuti instruksi untuk memperbaiki masalah yang muncul (jika ada).
+Pastikan tidak ada error penting (tanda ✓).
 
 ---
 
-## LANGKAH 2: Persiapan File Aplikasi
+## Langkah 2: Persiapan File Aplikasi
 
 ### 2.1 Ekstrak Folder
 
-1. Salin folder `Projek_PAM` yang Anda terima
-2. Letakkan di lokasi yang mudah diakses, contoh: `C:\Users\YourName\Projects\Projek_PAM`
-3. Pastikan struktur folder seperti ini:
+1. Copy folder `Projek_PAM` yang Anda terima
+2. Letakkan di lokasi yang mudah diakses, contoh:
    ```
-   Projek_PAM/
-   ├── aplikasi2/
-   │   ├── android/
-   │   │   └── app/
-   │   │       └── google-services.json  ← File ini HARUS ADA
-   │   ├── lib/
-   │   └── pubspec.yaml
-   └── aplikasi2_watch/
-       ├── android/
-       │   └── app/
-       │       └── google-services.json  ← File ini HARUS ADA
-       ├── lib/
-       └── pubspec.yaml
+   C:\Users\YourName\Projects\Projek_PAM
    ```
 
 ### 2.2 Verifikasi File Konfigurasi
 
-**PENTING:** Pastikan file-file berikut sudah ada di folder:
+**PENTING!** Pastikan file-file berikut ada:
 
-✅ `aplikasi2\android\app\google-services.json` - Konfigurasi Firebase untuk aplikasi utama
-✅ `aplikasi2_watch\android\app\google-services.json` - Konfigurasi Firebase untuk aplikasi watch
-✅ `aplikasi2\android\app\src\main\AndroidManifest.xml` - Sudah berisi Google Maps API Key
+✅ `aplikasi2\android\app\google-services.json`
+✅ `aplikasi2_watch\android\app\google-services.json`
+✅ `aplikasi2\android\app\src\main\AndroidManifest.xml`
 
-**Jika file-file ini TIDAK ADA**, hubungi pemberi aplikasi untuk mendapatkan file tersebut.
+**Jika file tidak ada**, hubungi pemberi aplikasi untuk mendapatkan file konfigurasi Firebase.
 
-### 2.3 Buka Folder di VS Code atau Terminal
+### 2.3 Buka Folder di Terminal
 
-**Jika menggunakan VS Code:**
-- Buka VS Code
-- File → Open Folder
-- Pilih folder `Projek_PAM`
-
-**Jika menggunakan Terminal/PowerShell:**
 ```bash
 cd C:\Users\YourName\Projects\Projek_PAM
 ```
 
 ---
 
-## LANGKAH 3: Install Dependencies
+## Langkah 3: Install Dependencies
 
-Sekarang kita install semua package yang dibutuhkan aplikasi.
-
-### 3.1 Install Dependencies Aplikasi Utama
-
-Buka Terminal/PowerShell di folder aplikasi utama:
+### 3.1 Aplikasi Utama
 
 ```bash
 cd aplikasi2
 flutter pub get
 ```
 
-Tunggu hingga proses selesai (biasanya 1-3 menit tergantung koneksi internet).
+Tunggu hingga selesai (1-3 menit).
 
-### 3.2 Install Dependencies Aplikasi Watch
-
-Buka Terminal/PowerShell di folder aplikasi watch:
+### 3.2 Aplikasi Watch
 
 ```bash
 cd ..\aplikasi2_watch
 flutter pub get
 ```
 
-Tunggu hingga selesai.
-
 ---
 
-## LANGKAH 4: Jalankan Aplikasi
+## Langkah 4: Jalankan Aplikasi
 
-### 4.1 Jalankan Emulator Android
+### 4.1 Start Emulator
 
-**Cara 1: Via Android Studio**
+**Via Android Studio:**
 1. Buka Android Studio
-2. Klik "More Actions" → "Virtual Device Manager"
-3. Klik tombol ▶️ (Play) pada device yang sudah dibuat
-4. Tunggu emulator menyala (biasanya 1-2 menit)
+2. "More Actions" → "Virtual Device Manager"
+3. Klik ▶️ pada emulator yang sudah dibuat
 
-**Cara 2: Via Command Line**
+**Via Command Line:**
 ```bash
 flutter emulators
 flutter emulators --launch <nama_emulator>
 ```
 
-### 4.2 Cek Koneksi Device
+### 4.2 Cek Device
 
 Pastikan emulator terdeteksi:
 
@@ -191,75 +160,65 @@ Pastikan emulator terdeteksi:
 flutter devices
 ```
 
-Seharusnya muncul device Android dalam list.
-
-### 4.3 Jalankan Aplikasi Utama
-
-Pastikan Anda di folder `aplikasi2`:
+### 4.3 Run Aplikasi Utama
 
 ```bash
 cd aplikasi2
 flutter run
 ```
 
-**Proses build pertama kali akan lama (5-15 menit).** Harap bersabar!
+⏱️ **Build pertama kali memakan waktu 5-15 menit**. Harap sabar!
 
-Setelah berhasil, aplikasi akan otomatis terbuka di emulator.
+### 4.4 Run Aplikasi Watch (Opsional)
 
-### 4.4 Jalankan Aplikasi Watch (Opsional)
+Untuk menjalankan aplikasi watch, Anda memerlukan emulator Wear OS:
 
-Jika ingin test aplikasi watch, Anda perlu emulator Wear OS atau smartwatch fisik.
-
-**Untuk emulator Wear OS:**
-1. Di Android Studio, buat Virtual Device baru
-2. Pilih kategori "Wear OS" 
-3. Pilih device seperti "Wear OS Small Round"
-4. Jalankan emulator
-
-**Jalankan aplikasi:**
-```bash
-cd aplikasi2_watch
-flutter run
-```
-
-Pilih device Wear OS saat diminta.
+1. Buat Virtual Device Wear OS di Android Studio
+2. Pilih "Wear OS Small Round"
+3. Jalankan emulator Wear OS
+4. Run aplikasi:
+   ```bash
+   cd aplikasi2_watch
+   flutter run
+   ```
 
 ---
 
-## LANGKAH 5: Testing Aplikasi
+## Langkah 5: Testing Aplikasi
 
-### 5.1 Registrasi Akun Pertama
+### 5.1 Registrasi Akun
 
-1. Di aplikasi, klik "Daftar" atau "Register"
-2. Masukkan email: `test@example.com`
-3. Masukkan password: `test123456`
+1. Klik "Daftar" atau "Register"
+2. Email: `test@example.com`
+3. Password: `test123456`
 4. Klik "Register"
 
 ### 5.2 Setup Profil
 
-1. Pilih role: **Parent** (Orang Tua)
-2. Masukkan nama: `Test Parent`
+1. Pilih role: **Parent** (Orang Tua) atau **Child** (Anak)
+2. Masukkan nama
 3. Lengkapi profil
 
-### 5.3 Test Fitur
+### 5.3 Coba Fitur
 
-- **Lokasi**: Izinkan akses lokasi → Lihat peta
-- **Family**: Coba tambah anggota keluarga
-- **Profile**: Edit profil Anda
+- 📍 **Lokasi**: Izinkan akses lokasi → Lihat peta
+- 👨‍👩‍👧‍👦 **Family**: Tambah anggota keluarga
+- 👤 **Profile**: Edit profil
 
 ---
 
-## ❗ Troubleshooting - Masalah yang Sering Terjadi
+# 🔧 Troubleshooting
 
-### Problem 1: "flutter command not found"
+## Problem 1: "flutter command not found"
+
+**Penyebab:** Flutter belum masuk PATH
 
 **Solusi:**
-- Flutter belum masuk PATH
-- Ulangi Langkah 1.1 untuk menambahkan Flutter ke PATH
-- Restart terminal/PowerShell
-- Test lagi: `flutter --version`
+1. Tambahkan Flutter ke PATH (ulangi Langkah 1.1)
+2. Restart terminal
+3. Test: `flutter --version`
 
-### Problem 2: Build error "Gradle sync failed"
+## Problem 2: Build error "Gradle sync failed"
 
 **Solusi:**
 ```bash
@@ -269,46 +228,47 @@ flutter pub get
 flutter run
 ```
 
-### Problem 3: "google-services.json not found"
+## Problem 3: "google-services.json not found"
+
+**Penyebab:** File konfigurasi Firebase tidak ada
 
 **Solusi:**
-- File `google-services.json` mungkin tidak tersedia di folder yang Anda terima
 - Hubungi pemberi aplikasi untuk mendapatkan file:
   - `aplikasi2\android\app\google-services.json`
   - `aplikasi2_watch\android\app\google-services.json`
-- Pastikan file berada di lokasi yang tepat
 
-### Problem 4: Google Maps tidak muncul (peta kosong)
+## Problem 4: Google Maps tidak muncul (peta kosong)
 
 **Solusi:**
-- Google Maps API sudah dikonfigurasi di aplikasi
-- Jika tetap tidak muncul, coba:
+```bash
+flutter clean
+flutter run
+```
+- Pastikan emulator/device terkoneksi internet
+- Tunggu beberapa saat, maps akan load
+
+## Problem 5: Lokasi tidak bisa diakses
+
+**Solusi:**
+- Di emulator: Settings → Location → Enable
+- Set lokasi manual: Menu "..." → Location
+- Izinkan permission saat diminta aplikasi
+
+## Problem 6: Firebase Authentication error
+
+**Solusi:**
+- Pastikan `google-services.json` ada di lokasi yang benar
+- Pastikan device terkoneksi internet
+- Coba rebuild:
   ```bash
   flutter clean
   flutter run
   ```
-- Pastikan emulator/device sudah terhubung internet
 
-### Problem 5: Lokasi tidak bisa diakses
-
-**Solusi:**
-- Di emulator, buka Settings → Location → Enable
-- Set lokasi manual di emulator (menu "..." → Location)
-- Izinkan permission lokasi saat diminta aplikasi
-
-### Problem 6: Firebase Authentication error
+## Problem 7: Build sangat lama (>20 menit)
 
 **Solusi:**
-- Firebase sudah dikonfigurasi, seharusnya tidak ada masalah
-- Jika ada error, pastikan:
-  - File `google-services.json` ada di lokasi yang benar
-  - Device/emulator terkoneksi internet
-  - Coba rebuild: `flutter clean` lalu `flutter run`
-
-### Problem 7: Build sangat lama (lebih dari 20 menit)
-
-**Solusi:**
-- Build pertama memang lama, ini normal
+- Build pertama memang lama (5-15 menit adalah normal)
 - Jika stuck, tekan Ctrl+C lalu coba lagi:
   ```bash
   flutter clean
@@ -318,28 +278,28 @@ flutter run
 
 ---
 
-## 📋 Checklist Setup
+# ✅ Checklist Setup
 
 Gunakan checklist ini untuk memastikan semua sudah benar:
 
-- [ ] Flutter SDK terinstall dan `flutter --version` berjalan
+- [ ] Flutter SDK terinstall (`flutter --version` berjalan)
 - [ ] Android Studio terinstall
 - [ ] Android SDK terinstall
 - [ ] Emulator Android sudah dibuat
 - [ ] Folder aplikasi sudah diekstrak
 - [ ] File `google-services.json` ada di `aplikasi2\android\app\`
 - [ ] File `google-services.json` ada di `aplikasi2_watch\android\app\`
-- [ ] `flutter pub get` berhasil di folder aplikasi2
-- [ ] `flutter pub get` berhasil di folder aplikasi2_watch
+- [ ] `flutter pub get` berhasil untuk aplikasi2
+- [ ] `flutter pub get` berhasil untuk aplikasi2_watch
 - [ ] Emulator sudah running
 - [ ] `flutter devices` menampilkan device
-- [ ] Aplikasi berhasil di-build dan running
+- [ ] Aplikasi berhasil di-build dan berjalan
 
 ---
 
-## 🏗️ Build APK (Opsional)
+# 📦 Build APK (Opsional)
 
-Jika ingin membuat file APK untuk diinstall di device lain:
+Untuk membuat file APK yang bisa diinstall di device lain:
 
 ### Debug APK
 ```bash
@@ -353,41 +313,43 @@ cd aplikasi2
 flutter build apk --release
 ```
 
-APK akan tersimpan di: `aplikasi2\build\app\outputs\flutter-apk\`
+File APK tersimpan di: `aplikasi2\build\app\outputs\flutter-apk\`
 
 ---
 
-## 📞 Informasi Tambahan
+# 📚 Informasi Tambahan
 
-### Link Repository
-https://github.com/Zuhair111/projek-PAM-UAS-Semester5
+## Link Repository
+🔗 https://github.com/Zuhair111/projek-PAM-UAS-Semester5
 
-### Catatan Penting
+## Catatan Keamanan
 
-⚠️ **FILE YANG DIBUTUHKAN:**
-- File `google-services.json` (2 file untuk aplikasi2 dan aplikasi2_watch)
-- Jika file ini tidak ada di folder yang Anda terima, **hubungi pemberi aplikasi**
+⚠️ **File yang Dibutuhkan:**
+- `google-services.json` (2 file untuk aplikasi2 dan aplikasi2_watch)
+- Jika tidak ada, hubungi pemberi aplikasi
 
-✅ **SUDAH DIKONFIGURASI:**
+✅ **Sudah Dikonfigurasi:**
 - Firebase Authentication & Database
 - Google Maps API Key
-- Semua dependencies di pubspec.yaml
+- Semua dependencies
 
-🎯 **YANG PERLU ANDA LAKUKAN:**
+🎯 **Yang Perlu Dilakukan:**
 - Install Flutter SDK dan Android Studio
 - Install dependencies dengan `flutter pub get`
-- Jalankan aplikasi dengan `flutter run`
+- Jalankan dengan `flutter run`
 
 ---
 
-## 👥 Kontributor
+# 👥 Tim Pengembang
 
 Projek PAM - UAS Semester 5
 
-## 📄 Lisensi
+---
+
+# 📄 Lisensi
 
 Educational Project - Untuk keperluan akademik
 
 ---
 
-**Selamat mencoba! Jika ada pertanyaan atau masalah, periksa bagian Troubleshooting terlebih dahulu.**
+**💻 Selamat mencoba! Jika ada masalah, cek bagian Troubleshooting terlebih dahulu.**
